@@ -18,20 +18,63 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      // Применяем тему сразу при загрузке страницы, до отрисовки контента
+      (function() {
+        try {
+          const stored = localStorage.getItem('cb:prefs');
+          let theme = 'auto';
+          if (stored) {
+            const prefs = JSON.parse(stored);
+            theme = prefs.theme || 'auto';
+          }
+          let effective = theme;
+          if (effective === 'auto') {
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            effective = prefersDark ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', effective);
+          document.body.setAttribute('data-theme', effective);
+        } catch (e) {
+          // Если ошибка, применяем тему по умолчанию
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+          document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a href="index.html" class="logo">
+        <a href="index.html" class="logo" data-i18n="logo.label">
           <span class="logo-mark">CB</span>
           <span class="logo-text">CampusBoard</span>
         </a>
         <nav class="nav" id="primaryNav">
-          <a href="index.html" class="nav-link nav-link-active">Home</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="board.html" class="nav-link">Board</a>
-          <a href="add-post.html" class="nav-link nav-cta">Add Post</a>
+          <a href="index.html" class="nav-link nav-link-active" data-i18n="nav.home">Home</a>
+          <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+          <a href="board.html" class="nav-link" data-i18n="nav.board">Board</a>
+          <a href="add-post.html" class="nav-link nav-cta" data-i18n="nav.addPost">Add Post</a>
         </nav>
+        <div class="header-controls">
+          <button
+            class="icon-btn"
+            id="langToggle"
+            type="button"
+            aria-label="Toggle language"
+          >
+            <span id="langToggleLabel">EN</span>
+          </button>
+          <button
+            class="icon-btn"
+            id="themeToggle"
+            type="button"
+            aria-label="Toggle theme"
+          >
+            <i class="fa-solid fa-moon" id="themeToggleIcon"></i>
+          </button>
+        </div>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
           <span class="nav-toggle-line"></span>
           <span class="nav-toggle-line"></span>
@@ -44,29 +87,33 @@
         <div class="hero-gradient"></div>
         <div class="container hero-inner">
           <div class="hero-copy">
-            <h1>Stay in the loop on campus life.</h1>
-            <p>
+            <p class="hero-greeting" id="heroGreeting"></p>
+            <p class="hero-date" id="heroDate"></p>
+            <h1 data-i18n="home.hero.title">Stay in the loop on campus life.</h1>
+            <p data-i18n="home.hero.body">
               CampusBoard is your central hub for events, announcements, and
               opportunities. One clean board, everything that matters.
             </p>
             <div class="hero-actions">
-              <a href="board.html" class="btn btn-primary">View All Announcements</a>
-              <a href="add-post.html" class="btn btn-outline">
+              <a href="board.html" class="btn btn-primary" data-i18n="home.hero.ctaPrimary"
+                >View All Announcements</a
+              >
+              <a href="add-post.html" class="btn btn-outline" data-i18n="home.hero.ctaSecondary">
                 <i class="fa-solid fa-plus"></i>
                 Add New Post
               </a>
             </div>
             <div class="hero-meta">
               <div>
-                <span class="hero-meta-label">Active boards</span>
+                <span class="hero-meta-label" data-i18n="home.stats.boards">Active boards</span>
                 <span class="hero-meta-value">12</span>
               </div>
               <div>
-                <span class="hero-meta-label">Weekly posts</span>
-                <span class="hero-meta-value">340+</span>
+                <span class="hero-meta-label" data-i18n="home.stats.weekly">Weekly posts</span>
+                <span class="hero-meta-value" id="heroWeeklyCount">340+</span>
               </div>
               <div>
-                <span class="hero-meta-label">Student orgs</span>
+                <span class="hero-meta-label" data-i18n="home.stats.orgs">Student orgs</span>
                 <span class="hero-meta-value">85</span>
               </div>
             </div>
@@ -117,69 +164,21 @@
       <section class="section">
         <div class="container">
           <div class="section-header">
-            <h2>Popular Announcements</h2>
-            <p>Curated posts students are checking out right now.</p>
+            <h2 data-i18n="home.section.popularTitle">Popular Announcements</h2>
+            <p data-i18n="home.section.popularSubtitle">
+              Curated posts students are checking out right now.
+            </p>
           </div>
-          <div class="card-grid">
-            <article class="card">
-              <div class="card-badge-row">
-                <span class="badge badge-blue">Events</span>
-              </div>
-              <h3>Midnight Breakfast Finals Week</h3>
-              <p class="card-snippet">
-                Take a break from studying and grab pancakes, live music, and
-                giveaways at the campus center.
-              </p>
-              <div class="card-meta">
-                <span>Campus Dining</span>
-                <span>Apr 22, 2026</span>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-badge-row">
-                <span class="badge badge-purple">Academics</span>
-              </div>
-              <h3>Free Writing Center Workshops</h3>
-              <p class="card-snippet">
-                Small-group sessions on research papers, lab reports, and
-                scholarship essays.
-              </p>
-              <div class="card-meta">
-                <span>Writing Center</span>
-                <span>Apr 18, 2026</span>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-badge-row">
-                <span class="badge badge-green">Jobs</span>
-              </div>
-              <h3>On-Campus Summer Internships</h3>
-              <p class="card-snippet">
-                Paid positions with IT, library, and student affairs offices
-                open for applications now.
-              </p>
-              <div class="card-meta">
-                <span>Career Services</span>
-                <span>Apr 15, 2026</span>
-              </div>
-            </article>
-            <article class="card">
-              <div class="card-badge-row">
-                <span class="badge badge-amber">Lost &amp; Found</span>
-              </div>
-              <h3>Found: Laptop in Science Building</h3>
-              <p class="card-snippet">
-                Describe your case and lock screen to claim at the campus
-                security desk.
-              </p>
-              <div class="card-meta">
-                <span>Campus Security</span>
-                <span>Apr 14, 2026</span>
-              </div>
-            </article>
+          <div class="card-grid" id="homePopularGrid"></div>
+          <div class="section-header" style="margin-top: 2.5rem">
+            <h2 data-i18n="home.section.latestTitle">Latest Announcements</h2>
+            <p data-i18n="home.section.latestSubtitle">
+              Fresh posts from across campus, updated as new announcements are added.
+            </p>
           </div>
+          <div class="card-grid" id="homeLatestGrid"></div>
           <div class="section-cta">
-            <a href="board.html" class="btn btn-primary btn-wide">
+            <a href="board.html" class="btn btn-primary btn-wide" data-i18n="home.section.viewAll">
               View All Announcements
             </a>
           </div>
@@ -198,14 +197,15 @@
         <div class="footer-meta">
           <p>Design &amp; Development · 2026 Cohort</p>
           <p class="footer-links">
-            <a href="about.html">Our Team</a>
+            <a href="about.html" data-i18n="footer.team">Our Team</a>
             <span>·</span>
-            <a href="board.html">Announcements</a>
+            <a href="board.html" data-i18n="footer.announcements">Announcements</a>
           </p>
         </div>
       </div>
     </footer>
 
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
     <script src="main.js"></script>
   </body>
 </html>

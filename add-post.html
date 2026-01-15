@@ -18,22 +18,68 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      // Применяем тему сразу при загрузке страницы, до отрисовки контента
+      (function() {
+        try {
+          const stored = localStorage.getItem('cb:prefs');
+          let theme = 'auto';
+          if (stored) {
+            const prefs = JSON.parse(stored);
+            theme = prefs.theme || 'auto';
+          }
+          let effective = theme;
+          if (effective === 'auto') {
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            effective = prefersDark ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', effective);
+          document.body.setAttribute('data-theme', effective);
+        } catch (e) {
+          // Если ошибка, применяем тему по умолчанию
+          const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+          document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <header class="site-header">
       <div class="container header-inner">
-        <a href="index.html" class="logo">
+        <a href="index.html" class="logo" data-i18n="logo.label">
           <span class="logo-mark">CB</span>
           <span class="logo-text">CampusBoard</span>
         </a>
         <nav class="nav" id="primaryNav">
-          <a href="index.html" class="nav-link">Home</a>
-          <a href="about.html" class="nav-link">About</a>
-          <a href="board.html" class="nav-link">Board</a>
-          <a href="add-post.html" class="nav-link nav-link-active nav-cta"
+          <a href="index.html" class="nav-link" data-i18n="nav.home">Home</a>
+          <a href="about.html" class="nav-link" data-i18n="nav.about">About</a>
+          <a href="board.html" class="nav-link" data-i18n="nav.board">Board</a>
+          <a
+            href="add-post.html"
+            class="nav-link nav-link-active nav-cta"
+            data-i18n="nav.addPost"
             >Add Post</a
           >
         </nav>
+        <div class="header-controls">
+          <button
+            class="icon-btn"
+            id="langToggle"
+            type="button"
+            aria-label="Toggle language"
+          >
+            <span id="langToggleLabel">EN</span>
+          </button>
+          <button
+            class="icon-btn"
+            id="themeToggle"
+            type="button"
+            aria-label="Toggle theme"
+          >
+            <i class="fa-solid fa-moon" id="themeToggleIcon"></i>
+          </button>
+        </div>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
           <span class="nav-toggle-line"></span>
           <span class="nav-toggle-line"></span>
@@ -45,9 +91,9 @@
       <section>
         <div class="container">
           <div class="page-header">
-            <p class="page-kicker">Add announcement</p>
-            <h1 class="page-title">Share an update with your campus.</h1>
-            <p class="page-subtitle">
+            <p class="page-kicker" data-i18n="add.kicker">Add announcement</p>
+            <h1 class="page-title" data-i18n="add.title">Share an update with your campus.</h1>
+            <p class="page-subtitle" data-i18n="add.subtitle">
               Use clear titles and categories so students can quickly understand
               what your announcement is about.
             </p>
@@ -57,8 +103,13 @@
             <div class="form-row">
               <div>
                 <div class="field-label">
-                  <span>Title <span class="required-dot">*</span></span>
-                  <span class="field-hint">E.g. “Volunteer Tutoring Sign-ups”</span>
+                  <span>
+                    <span data-i18n="form.title">Title</span>
+                    <span class="required-dot">*</span>
+                  </span>
+                  <span class="field-hint" data-i18n="form.titleHint"
+                    >E.g. “Volunteer Tutoring Sign-ups”</span
+                  >
                 </div>
                 <input
                   type="text"
@@ -74,8 +125,13 @@
             <div class="form-row grid-2">
               <div>
                 <div class="field-label">
-                  <span>Category <span class="required-dot">*</span></span>
-                  <span class="field-hint">Where should this appear?</span>
+                  <span>
+                    <span data-i18n="form.category">Category</span>
+                    <span class="required-dot">*</span>
+                  </span>
+                  <span class="field-hint" data-i18n="form.categoryHint"
+                    >Where should this appear?</span
+                  >
                 </div>
                 <div class="select-wrapper">
                   <select
@@ -84,12 +140,24 @@
                     class="select"
                     required
                   >
-                    <option value="">Select a category</option>
-                    <option value="events">🎉 Events</option>
-                    <option value="academics">📚 Academics</option>
-                    <option value="lost-found">🔎 Lost &amp; Found</option>
-                    <option value="jobs">💼 Jobs</option>
-                    <option value="for-sale">🏷️ For Sale</option>
+                    <option value="" data-i18n="form.categoryPlaceholder">
+                      Select a category
+                    </option>
+                    <option value="events" data-i18n="categories.events">
+                      🎉 Events
+                    </option>
+                    <option value="academics" data-i18n="categories.academics">
+                      📚 Academics
+                    </option>
+                    <option value="lost-found" data-i18n="categories.lostFound">
+                      🔎 Lost &amp; Found
+                    </option>
+                    <option value="jobs" data-i18n="categories.jobs">
+                      💼 Jobs
+                    </option>
+                    <option value="for-sale" data-i18n="categories.forSale">
+                      🏷️ For Sale
+                    </option>
                   </select>
                   <i class="fa-solid fa-layer-group"></i>
                 </div>
@@ -97,32 +165,42 @@
 
               <div>
                 <div class="field-label">
-                  <span>Priority</span>
-                  <span class="field-hint">Use High for time-sensitive posts</span>
+                  <span data-i18n="form.priority">Priority</span>
+                  <span class="field-hint" data-i18n="form.priorityHint"
+                    >Use High for time-sensitive posts</span
+                  >
                 </div>
                 <input type="hidden" name="priority" id="priority" value="normal" />
-                <div class="priority-row">
+                <div
+                  class="priority-row"
+                  role="radiogroup"
+                  aria-label="Announcement priority"
+                >
                   <button
                     type="button"
                     class="priority-pill is-active-normal"
                     data-priority="normal"
+                    role="radio"
+                    aria-checked="true"
                   >
                     <span>
                       <span class="priority-dot-normal"></span>
-                      Normal
+                      <span data-i18n="priority.normal">Normal</span>
                     </span>
-                    <span>Default</span>
+                    <span data-i18n="priority.default">Default</span>
                   </button>
                   <button
                     type="button"
                     class="priority-pill"
                     data-priority="high"
+                    role="radio"
+                    aria-checked="false"
                   >
                     <span>
                       <span class="priority-dot-high"></span>
-                      High
+                      <span data-i18n="priority.high">High</span>
                     </span>
-                    <span>Time-sensitive</span>
+                    <span data-i18n="priority.timeSensitive">Time-sensitive</span>
                   </button>
                 </div>
               </div>
@@ -131,8 +209,13 @@
             <div class="form-row">
               <div>
                 <div class="field-label">
-                  <span>Description <span class="required-dot">*</span></span>
-                  <span class="field-hint">Include date, time, and location.</span>
+                  <span>
+                    <span data-i18n="form.description">Description</span>
+                    <span class="required-dot">*</span>
+                  </span>
+                  <span class="field-hint" data-i18n="form.descriptionHint"
+                    >Include date, time, and location.</span
+                  >
                 </div>
                 <textarea
                   name="description"
@@ -150,8 +233,13 @@
             <div class="form-row grid-2">
               <div>
                 <div class="field-label">
-                  <span>Your name <span class="required-dot">*</span></span>
-                  <span class="field-hint">How should we credit this post?</span>
+                  <span>
+                    <span data-i18n="form.author">Your name</span>
+                    <span class="required-dot">*</span>
+                  </span>
+                  <span class="field-hint" data-i18n="form.authorHint"
+                    >How should we credit this post?</span
+                  >
                 </div>
                 <input
                   type="text"
@@ -165,8 +253,8 @@
 
               <div>
                 <div class="field-label">
-                  <span>Contact (email or link)</span>
-                  <span class="field-hint">Optional</span>
+                  <span data-i18n="form.contact">Contact (email or link)</span>
+                  <span class="field-hint" data-i18n="form.contactHint">Optional</span>
                 </div>
                 <input
                   type="text"
@@ -180,10 +268,21 @@
 
             <div class="form-actions">
               <p class="form-status" id="formStatus">
-                Required fields are marked with <span class="required-dot">*</span>
+                <span data-i18n="form.status.default">
+                  Required fields are marked with
+                </span>
+                <span class="required-dot">*</span>
               </p>
+              <button
+                type="button"
+                class="btn btn-outline"
+                id="clearFormBtn"
+                data-i18n="form.clear"
+              >
+                Clear form
+              </button>
               <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
-                <span>Submit announcement</span>
+                <span data-i18n="form.submit">Submit announcement</span>
                 <div class="spinner"></div>
               </button>
             </div>
@@ -210,14 +309,15 @@
         <div class="footer-meta">
           <p>Design &amp; Development · 2026 Cohort</p>
           <p class="footer-links">
-            <a href="about.html">Our Team</a>
+            <a href="about.html" data-i18n="footer.team">Our Team</a>
             <span>·</span>
-            <a href="board.html">Announcements</a>
+            <a href="board.html" data-i18n="footer.announcements">Announcements</a>
           </p>
         </div>
       </div>
     </footer>
 
+    <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
     <script src="main.js"></script>
   </body>
 </html>
