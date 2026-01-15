@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CampusBoard | Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">CB</span>
+          <span class="logo-text">CampusBoard</span>
+        </a>
+        <nav class="nav" id="primaryNav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="board.html" class="nav-link nav-link-active">Board</a>
+          <a href="add-post.html" class="nav-link nav-cta">Add Post</a>
+        </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="layout-main">
+      <section>
+        <div class="container">
+          <div class="page-header">
+            <p class="page-kicker">Campus Board</p>
+            <h1 class="page-title">All announcements in one place.</h1>
+            <p class="page-subtitle">
+              Browse events, deadlines, and opportunities. Use filters to narrow
+              down to what matters most to you.
+            </p>
+          </div>
+
+          <div class="board-layout">
+            <div>
+              <div class="board-controls">
+                <div class="filter-row" id="filterRow">
+                  <button class="filter-btn is-active" data-filter="all">
+                    <i class="fa-solid fa-border-all"></i>
+                    <span>All</span>
+                  </button>
+                  <button class="filter-btn" data-filter="events">
+                    <i class="fa-solid fa-calendar-star"></i>
+                    <span>Events</span>
+                  </button>
+                  <button class="filter-btn" data-filter="academics">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>Academics</span>
+                  </button>
+                  <button class="filter-btn" data-filter="lost-found">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Lost &amp; Found</span>
+                  </button>
+                  <button class="filter-btn" data-filter="jobs">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Jobs</span>
+                  </button>
+                  <button class="filter-btn" data-filter="for-sale">
+                    <i class="fa-solid fa-tag"></i>
+                    <span>For Sale</span>
+                  </button>
+                </div>
+
+                <div class="sort-row">
+                  <div class="sort-select">
+                    <span>Sort by</span>
+                    <select id="sortSelect">
+                      <option value="newest">Newest</option>
+                      <option value="most-liked">Most liked</option>
+                      <option value="category">Category</option>
+                    </select>
+                  </div>
+                  <div class="board-stats" id="boardStats">
+                    Showing 8 announcements
+                  </div>
+                </div>
+              </div>
+
+              <div class="board-grid" id="boardGrid">
+                <article
+                  class="board-card"
+                  data-category="events"
+                  data-likes="124"
+                  data-date="2026-04-22"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-blue">Events</span>
+                      </div>
+                      <h2 class="board-card-title">Spring Club Fair 2026</h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>124</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Meet student orgs, collect swag, and enjoy live performances on
+                    the main quad. Open to all students.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Student Affairs</span>
+                      <span>Apr 22, 2026 · Tomorrow · 4:00 PM</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article
+                  class="board-card"
+                  data-category="academics"
+                  data-likes="58"
+                  data-date="2026-04-18"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-purple">Academics</span>
+                      </div>
+                      <h2 class="board-card-title">
+                        Final Exam Study Nights at the Library
+                      </h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>58</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Extended hours, free coffee, and quiet group spaces available
+                    all week in Library East Wing.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Library Services</span>
+                      <span>Apr 18, 2026 · 7:00 PM</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article
+                  class="board-card"
+                  data-category="jobs"
+                  data-likes="75"
+                  data-date="2026-04-15"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-green">Jobs</span>
+                      </div>
+                      <h2 class="board-card-title">
+                        On-Campus Summer Research Assistants
+                      </h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>75</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Paid positions supporting faculty research in CS, Biology, and
+                    Psychology departments.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Career Services</span>
+                      <span>Apr 15, 2026 · Apply by May 1</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article
+                  class="board-card"
+                  data-category="lost-found"
+                  data-likes="19"
+                  data-date="2026-04-14"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-amber">Lost &amp; Found</span>
+                      </div>
+                      <h2 class="board-card-title">
+                        Found: Silver Hydro Flask in Science Hall
+                      </h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>19</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Describe your stickers and initials to claim at the Campus
+                    Security front desk.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Campus Security</span>
+                      <span>Apr 14, 2026 · 2:30 PM</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article
+                  class="board-card"
+                  data-category="for-sale"
+                  data-likes="43"
+                  data-date="2026-04-16"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-amber">For Sale</span>
+                      </div>
+                      <h2 class="board-card-title">Used Textbooks - CS &amp; Math</h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>43</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Gently used calculus and programming textbooks. Discount for
+                    bundle purchases.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Maya · Sophomore</span>
+                      <span>Apr 16, 2026 · DM via campus email</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article
+                  class="board-card"
+                  data-category="events"
+                  data-likes="32"
+                  data-date="2026-04-19"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-blue">Events</span>
+                      </div>
+                      <h2 class="board-card-title">Midnight Breakfast</h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>32</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Free pancakes, trivia, and live DJ in the Campus Center to
+                    celebrate the end of classes.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Campus Dining</span>
+                      <span>Apr 19, 2026 · 10:00 PM</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article
+                  class="board-card"
+                  data-category="academics"
+                  data-likes="27"
+                  data-date="2026-04-17"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-purple">Academics</span>
+                      </div>
+                      <h2 class="board-card-title">
+                        Scholarship Essay Review Drop-ins
+                      </h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>27</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Bring a draft and get one-on-one feedback from Writing Center
+                    tutors. First come, first served.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Writing Center</span>
+                      <span>Apr 17, 2026 · 3:00–6:00 PM</span>
+                    </div>
+                  </div>
+                </article>
+
+                <article
+                  class="board-card"
+                  data-category="jobs"
+                  data-likes="64"
+                  data-date="2026-04-20"
+                >
+                  <div class="board-card-header">
+                    <div>
+                      <div class="card-badge-row">
+                        <span class="badge badge-green">Jobs</span>
+                      </div>
+                      <h2 class="board-card-title">
+                        Local Café Hiring Baristas (Student-friendly)
+                      </h2>
+                    </div>
+                    <button class="like-btn" type="button">
+                      <i class="fa-regular fa-heart"></i>
+                      <span>64</span>
+                    </button>
+                  </div>
+                  <p class="board-card-snippet">
+                    Flexible hours, walking distance from campus, no experience
+                    required—training provided.
+                  </p>
+                  <div class="board-card-footer">
+                    <div class="board-card-meta">
+                      <span>Brewpoint Café</span>
+                      <span>Apr 20, 2026 · Apply in person</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <aside class="board-sidebar">
+              <div>
+                <h3>Tips for posting</h3>
+                <p>
+                  Use clear titles, choose the right category, and mark time-sensitive
+                  posts as high priority so they stand out.
+                </p>
+              </div>
+              <div>
+                <h3>Popular tags</h3>
+                <div class="sidebar-chip-row">
+                  <span class="sidebar-chip">First-years</span>
+                  <span class="sidebar-chip">Scholarships</span>
+                  <span class="sidebar-chip">Campus Jobs</span>
+                  <span class="sidebar-chip">Performances</span>
+                  <span class="sidebar-chip">Career Fair</span>
+                </div>
+              </div>
+              <div>
+                <h3>Want to share something?</h3>
+                <p>Post your own announcement in just a few steps.</p>
+                <a href="add-post.html" class="btn btn-primary btn-wide">
+                  Add a new post
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <p class="footer-brand">CampusBoard</p>
+          <p class="footer-text">
+            Built by the CampusBoard team to keep every student in the know.
+          </p>
+        </div>
+        <div class="footer-meta">
+          <p>Design &amp; Development · 2026 Cohort</p>
+          <p class="footer-links">
+            <a href="about.html">Our Team</a>
+            <span>·</span>
+            <a href="board.html">Announcements</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>
+

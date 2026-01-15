@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CampusBoard | Add Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-mark">CB</span>
+          <span class="logo-text">CampusBoard</span>
+        </a>
+        <nav class="nav" id="primaryNav">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="board.html" class="nav-link">Board</a>
+          <a href="add-post.html" class="nav-link nav-link-active nav-cta"
+            >Add Post</a
+          >
+        </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span class="nav-toggle-line"></span>
+          <span class="nav-toggle-line"></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="layout-main">
+      <section>
+        <div class="container">
+          <div class="page-header">
+            <p class="page-kicker">Add announcement</p>
+            <h1 class="page-title">Share an update with your campus.</h1>
+            <p class="page-subtitle">
+              Use clear titles and categories so students can quickly understand
+              what your announcement is about.
+            </p>
+          </div>
+
+          <form id="postForm" class="form-card" novalidate>
+            <div class="form-row">
+              <div>
+                <div class="field-label">
+                  <span>Title <span class="required-dot">*</span></span>
+                  <span class="field-hint">E.g. “Volunteer Tutoring Sign-ups”</span>
+                </div>
+                <input
+                  type="text"
+                  name="title"
+                  id="title"
+                  class="input"
+                  required
+                  maxlength="80"
+                />
+              </div>
+            </div>
+
+            <div class="form-row grid-2">
+              <div>
+                <div class="field-label">
+                  <span>Category <span class="required-dot">*</span></span>
+                  <span class="field-hint">Where should this appear?</span>
+                </div>
+                <div class="select-wrapper">
+                  <select
+                    name="category"
+                    id="category"
+                    class="select"
+                    required
+                  >
+                    <option value="">Select a category</option>
+                    <option value="events">🎉 Events</option>
+                    <option value="academics">📚 Academics</option>
+                    <option value="lost-found">🔎 Lost &amp; Found</option>
+                    <option value="jobs">💼 Jobs</option>
+                    <option value="for-sale">🏷️ For Sale</option>
+                  </select>
+                  <i class="fa-solid fa-layer-group"></i>
+                </div>
+              </div>
+
+              <div>
+                <div class="field-label">
+                  <span>Priority</span>
+                  <span class="field-hint">Use High for time-sensitive posts</span>
+                </div>
+                <input type="hidden" name="priority" id="priority" value="normal" />
+                <div class="priority-row">
+                  <button
+                    type="button"
+                    class="priority-pill is-active-normal"
+                    data-priority="normal"
+                  >
+                    <span>
+                      <span class="priority-dot-normal"></span>
+                      Normal
+                    </span>
+                    <span>Default</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="priority-pill"
+                    data-priority="high"
+                  >
+                    <span>
+                      <span class="priority-dot-high"></span>
+                      High
+                    </span>
+                    <span>Time-sensitive</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <div class="field-label">
+                  <span>Description <span class="required-dot">*</span></span>
+                  <span class="field-hint">Include date, time, and location.</span>
+                </div>
+                <textarea
+                  name="description"
+                  id="description"
+                  class="textarea"
+                  required
+                  maxlength="600"
+                ></textarea>
+                <div class="char-counter" id="charCounter">
+                  0 / 600 characters
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row grid-2">
+              <div>
+                <div class="field-label">
+                  <span>Your name <span class="required-dot">*</span></span>
+                  <span class="field-hint">How should we credit this post?</span>
+                </div>
+                <input
+                  type="text"
+                  name="author"
+                  id="author"
+                  class="input"
+                  required
+                  maxlength="60"
+                />
+              </div>
+
+              <div>
+                <div class="field-label">
+                  <span>Contact (email or link)</span>
+                  <span class="field-hint">Optional</span>
+                </div>
+                <input
+                  type="text"
+                  name="contact"
+                  id="contact"
+                  class="input"
+                  maxlength="120"
+                />
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <p class="form-status" id="formStatus">
+                Required fields are marked with <span class="required-dot">*</span>
+              </p>
+              <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">
+                <span>Submit announcement</span>
+                <div class="spinner"></div>
+              </button>
+            </div>
+
+            <div
+              id="formAlert"
+              class="alert hidden"
+              role="status"
+              aria-live="polite"
+            ></div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <p class="footer-brand">CampusBoard</p>
+          <p class="footer-text">
+            Built by the CampusBoard team to keep every student in the know.
+          </p>
+        </div>
+        <div class="footer-meta">
+          <p>Design &amp; Development · 2026 Cohort</p>
+          <p class="footer-links">
+            <a href="about.html">Our Team</a>
+            <span>·</span>
+            <a href="board.html">Announcements</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>
+
